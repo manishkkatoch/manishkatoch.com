@@ -1,0 +1,33 @@
+@import "./base.css";
+
+.dark-bg {
+  background-color: var(--dark-bg);
+  color: var(--light-fg);
+}
+
+.navbar {
+  background-color: var(--dark-bg);
+}
+
+div.post-div {
+  padding: 10px;
+}
+
+a.post-ref {
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
+.post-hero {
+  width: 100%;
+  height: 150px;
+  object-position: top;
+  object-fit: cover;
+}
+
+.main-row {
+  padding: 0px 1em;
+  margin: auto;
+  max-width: 76rem;
+}

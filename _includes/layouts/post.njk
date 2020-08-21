@@ -1,0 +1,59 @@
+---
+layout: layouts/base.njk
+templateClass: tmpl-post
+style:
+  - /css/home.css
+  - /css/footer.css
+  - /css/post.css
+---
+
+<section class="container-fluid align-items-center post" >
+  <img src="{{ titleImage.url | url }}" class="banner"/>
+  <div class="credit">
+    <a target="_blank" href="{{ titleImage.credits | linkUrl }}">{{ titleImage.credits | linkName }}</a> on 
+    <a target="_blank" href="{{ titleImage.source | linkUrl }}">{{ titleImage.source | linkName }} </a>
+  </div>
+  <h1>{{ title }}
+  </h1>
+
+  <div class="meta">
+  <p class="date">{{ date | htmlDateString }}</p>
+    {% for tag in tags %}
+      {%- if collections.tagList.indexOf(tag) != -1 -%}
+        {% set tagUrl %}/tags/{{ tag }}/{% endset %}
+        <a href="{{ tagUrl | url }}" class="post-tag">#{{ tag }}</a>
+      {%- endif -%}
+    {% endfor %}
+    
+  </div>
+  <p>
+    {{ content | safe }}
+  </p>
+  <hr>
+  {%- if publications -%}
+  <div class="publications">
+    <p>This story was also published in:</p>
+      <ul>
+        {% for publication in publications %}
+        <li class="p-0"><a target="_blank" href="{{ publication | linkUrl }}" >{{ publication | linkName }}</a></li>
+        {% endfor %}
+      </ul>
+  </div>
+  {%- endif -%}
+  <ul class="post-nav">
+    {%- set nextPost = collections.tech | getNextCollectionItem(page) %}
+    {%- if nextPost %}
+      <li class="next">
+        <a href="{{ nextPost.url | url }}">{{ nextPost.data.title }}</a>
+        <i class="fas fa-chevron-right tinted"></i>
+      </li>
+    {% endif %}
+    {%- set previousPost = collections.tech | getPreviousCollectionItem(page) %}
+    {%- if previousPost %}
+      <li class="previous">
+        <i class="fas fa-chevron-left tinted"></i>
+        <a href="{{ previousPost.url | url }}">{{ previousPost.data.title }}</a>
+      </li>
+    {% endif %}
+  </ul>
+</section>

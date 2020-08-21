@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dependent Types in Scala — A practical example</title>
+    <meta name="description" content="An example by which we demonstrate how we can add constraints to business domain for compile time validation of business logic!">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/prism.base16.monokai.dark.css">
+    
+      <link rel="stylesheet" href="/css/home.css">
+    
+      <link rel="stylesheet" href="/css/footer.css">
+    
+      <link rel="stylesheet" href="/css/post.css">
+    
+    <link rel="alternate" href="." type="application/atom+xml" title="">
+    <link rel="alternate" href="." type="application/json" title="">
+    <script src="https://kit.fontawesome.com/0a5d5a6a83.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+  <section class="container-fluid align-items-center">
+       <div class="row dark-bg">
+         <nav class="navbar navbar-expand-lg">
+    <span class="navbar-brand">
+        <img class="hero" src="/images/about_me.jpg" />
+    </span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+      
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/tech/">Tech</a></li>
+        <li class="nav-item"><a class="nav-link" href="/leadership/">Leadership</a></li>
+        <li class="nav-item"><a class="nav-link" href="/playbooks/">Play Books</a></li>
+      </ul>
+    </div>
+  </nav>
+      </div>
+      <div class="row main-row">
+      <div class="col-lg-12">
+       
+<section class="container-fluid align-items-center post" >
+  <img src="https://source.unsplash.com/4zwozQxDbD4/1600x900" class="banner"/>
+  <div class="credit">
+    <a target="_blank" href="https://unsplash.com/@guiccunha">Guilherme Cunha</a> on 
+    <a target="_blank" href="https://unsplash.com">Unsplash </a>
+  </div>
+  <h1>Dependent Types in Scala — A practical example
+  </h1>
+
+  <div class="meta">
+  <p class="date">Mar 14, 2019</p>
+    
+        <a href="/tags/tech/" class="post-tag">#tech</a>
+        <a href="/tags/scala/" class="post-tag">#scala</a>
+        <a href="/tags/patterns/" class="post-tag">#patterns</a>
+    
+  </div>
+  <p>
+    <p>Of late, I have been fascinated with type-level programming in Scala. The more I play with it, the more I get excited about it. Although most of my production implementations have been at the framework level, there is no reason why it cannot be utilized to drive business logic.</p>
+<p>Let’s try to build our understanding of this paradigm using a trivial but a practical use case.</p>
+<p><em>Acme</em> online store has a flourishing business. They have a membership status associated with each of their customers in the form of <em>Acme Cards</em>. It’s a usual loyalty program with three tiers: <em>Platinum</em>, <em>Gold</em> and <em>Silver</em>. It is also a festive season and Acme has decided to give flat discounts for each tier. One of the backend API (they have a UI and BFF setup) of the Acme store needs to display the membership details and the applied discount.</p>
+<p>The following story sums up the expected behaviour:</p>
+<blockquote>
+<p><strong>Given</strong> the online store has members with platinum, gold, silver AcmeCards and the store has discount schemes associated with memberships</p>
+<p><strong>When</strong> a member puts item in cart and checks out his/her cart</p>
+<p><strong>Then</strong> display member’s membership, the discount applied and the points required for next upgraded membership.</p>
+</blockquote>
+<p>Now, a classical way of implementing this would be to have a repository to get the member and its type from the database given an identifier. We can further derive AcmeCard subscription for the identified member. But if we pause and rethink, we realise that we are writing all of the logic to make necessary selections. <em>All the validations are done, decisions are made, flows are selected, at the run time</em>. This leaves our interface prone to runtime errors. Wouldn’t it be great if the compiler could help us predict such errors at compile time itself?</p>
+<p>Scala can. <strong>If we code for types not for data</strong>.</p>
+<blockquote>
+<p>Type Level programming is a paradigm, when provided with a well constrained strongly type system, allows dynamic flows generation at compile time.</p>
+</blockquote>
+<p>A strong type system is one where the types are strictly constrained and the relationships established. The constraints guide the compiler to make decisions at certain compile points as well as predict if the compiled code succeed when run. If we constrain our system correctly, we can defer all the relevant object creation on compiler!</p>
+<p><strong>How do we go about it?</strong> To begin with, since all our computations are going to be based on types, each of our concerns should be represented by types.Member type represents a customer of Acme. For the sake of simplicity, we will only consider system identifier, names and the points accrued.</p>
+<pre class="language-scala"><code class="language-scala"><span class="token keyword">case</span> <span class="token keyword">class</span> Member<span class="token punctuation">(</span>id<span class="token operator">:</span> <span class="token builtin">String</span><span class="token punctuation">,</span> name<span class="token operator">:</span> <span class="token builtin">String</span><span class="token punctuation">,</span> points<span class="token operator">:</span> <span class="token builtin">Long</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span></code></pre>
+<p><code>MemberType</code> determines whether the member is a first time customer, or a frequent shopper or a patron of Acme Store.</p>
+<pre class="language-scala"><code class="language-scala"><span class="token keyword">trait</span> MemberType <span class="token punctuation">{</span><span class="token keyword">val</span> member<span class="token operator">:</span> Member<span class="token punctuation">}</span><span class="token keyword">case</span> <span class="token keyword">class</span> FirstTimer<span class="token punctuation">(</span>member<span class="token operator">:</span> Member<span class="token punctuation">)</span> <span class="token keyword">extends</span> MemberType<br><span class="token keyword">case</span> <span class="token keyword">class</span> FrequentShopper<span class="token punctuation">(</span>member<span class="token operator">:</span> Member<span class="token punctuation">)</span> <span class="token keyword">extends</span> MemberType<br><span class="token keyword">case</span> <span class="token keyword">class</span> Patron<span class="token punctuation">(</span>member<span class="token operator">:</span> Member<span class="token punctuation">)</span> <span class="token keyword">extends</span> MemberType</code></pre>
+<p><code>AcmeCard</code> represents the membership levels.</p>
+<pre class="language-scala"><code class="language-scala"><span class="token keyword">abstract</span> <span class="token keyword">class</span> AcmeCard<span class="token punctuation">(</span>member<span class="token operator">:</span> Member<span class="token punctuation">,</span> levelName<span class="token operator">:</span> <span class="token builtin">String</span><span class="token punctuation">)</span><br><br><span class="token keyword">case</span> <span class="token keyword">class</span> Silver<span class="token punctuation">(</span>member<span class="token operator">:</span> Member<span class="token punctuation">)</span> <span class="token keyword">extends</span> AcmeCard<span class="token punctuation">(</span>member<span class="token punctuation">,</span><span class="token string">"silver"</span><span class="token punctuation">)</span><br><span class="token keyword">case</span> <span class="token keyword">class</span> Gold<span class="token punctuation">(</span>member<span class="token operator">:</span> Member<span class="token punctuation">)</span> <span class="token keyword">extends</span> AcmeCard<span class="token punctuation">(</span>member<span class="token punctuation">,</span><span class="token string">"gold"</span><span class="token punctuation">)</span><br><span class="token keyword">case</span> <span class="token keyword">class</span> Platinum<span class="token punctuation">(</span>member<span class="token operator">:</span> Member<span class="token punctuation">)</span> <span class="token keyword">extends</span> AcmeCard<span class="token punctuation">(</span>member<span class="token punctuation">,</span><span class="token string">"platinum"</span><span class="token punctuation">)</span><br></code></pre>
+<p><code>Discounted</code> type represents what kind of discounts are associated with each AcmeCard. Now to make a decision, the compiler needs to know how to choose and create a type. This means that concern types like <code>Discounted</code> must be <a href="/tech/dependent-types-in-scala/">implicitly instantiable</a> as shown below.</p>
+<pre class="language-scala"><code class="language-scala"><span class="token keyword">trait</span> Discounted<span class="token punctuation">[</span>T<span class="token punctuation">]</span> <span class="token punctuation">{</span><br>    <span class="token keyword">def</span> getDiscount<span class="token operator">:</span> <span class="token builtin">Double</span> <br><span class="token punctuation">}</span><br><br><span class="token keyword">object</span> Discounted <span class="token punctuation">{</span> <br>    <span class="token comment">// apply method called by compiler to instantiate if no instance found</span><br>    <span class="token keyword">def</span> apply<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">implicit</span> discounted<span class="token operator">:</span> Discounted<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">=</span> discounted<br>    <br>    <span class="token keyword">def</span> createDiscounted<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>fn<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">=></span> <span class="token builtin">Double</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">new</span> Discounted<span class="token punctuation">[</span>T<span class="token punctuation">]</span> <span class="token punctuation">{</span><br>        <span class="token keyword">override</span> <span class="token keyword">def</span> getDiscount<span class="token operator">:</span> <span class="token builtin">Double</span> <span class="token operator">=</span> fn<span class="token punctuation">(</span><span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br>    <br>    <span class="token comment">//implicit instances of Discounted for each Membership Card</span><br>    <span class="token keyword">implicit</span> <span class="token keyword">val</span> silverCardDiscounted<span class="token operator">:</span> Discounted<span class="token punctuation">[</span>Silver<span class="token punctuation">]</span> <span class="token operator">=</span> createDiscounted<span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">=></span> <span class="token number">5.0</span><span class="token punctuation">)</span><br>    <span class="token keyword">implicit</span> <span class="token keyword">val</span> goldCardDiscounted<span class="token operator">:</span> Discounted<span class="token punctuation">[</span>Gold<span class="token punctuation">]</span> <span class="token operator">=</span> createDiscounted<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">=></span> <span class="token number">10.0</span><span class="token punctuation">)</span><br>    <span class="token keyword">implicit</span> <span class="token keyword">val</span> platinumCardDiscounted<span class="token operator">:</span> Discounted<span class="token punctuation">[</span>Platinum<span class="token punctuation">]</span> <span class="token operator">=</span> createDiscounted<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">=></span> <span class="token number">15.0</span><span class="token punctuation">)</span> <br><span class="token punctuation">}</span><br></code></pre>
+<p><code>AcmeCardPrinter</code> provides a trait that emits trademark marketing names for the AcmeCards.</p>
+<pre class="language-scala"><code class="language-scala"><span class="token keyword">trait</span> AcmeCardPrinter<span class="token punctuation">[</span>T<span class="token punctuation">]</span> <span class="token punctuation">{</span> <br>    <span class="token keyword">def</span> print<span class="token punctuation">(</span>t<span class="token operator">:</span> T<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">String</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">object</span> AcmeCardPrinter <span class="token punctuation">{</span><br>    <span class="token keyword">def</span> apply<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">implicit</span> prettyPrinter<span class="token operator">:</span> AcmeCardPrinter<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> AcmeCardPrinter<span class="token punctuation">[</span>T<span class="token punctuation">]</span> <span class="token operator">=</span> prettyPrinter<br>    <br>    <span class="token keyword">implicit</span> <span class="token keyword">val</span> silverAcmeCardPrinter<span class="token operator">:</span> AcmeCardPrinter<span class="token punctuation">[</span>Silver<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> AcmeCardPrinter<span class="token punctuation">[</span>Silver<span class="token punctuation">]</span> <span class="token punctuation">{</span> <br>        <span class="token keyword">override</span> <span class="token keyword">def</span> print<span class="token punctuation">(</span>t<span class="token operator">:</span> Silver<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">String</span> <span class="token operator">=</span> <span class="token string">"AcmeCard® Silver Start™"</span><br>    <span class="token punctuation">}</span><br>    <br>    <span class="token keyword">implicit</span> <span class="token keyword">val</span> goldAcmeCardPrinter<span class="token operator">:</span> AcmeCardPrinter<span class="token punctuation">[</span>Gold<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> AcmeCardPrinter<span class="token punctuation">[</span>Gold<span class="token punctuation">]</span> <span class="token punctuation">{</span><br>        <span class="token keyword">override</span> <span class="token keyword">def</span> print<span class="token punctuation">(</span>t<span class="token operator">:</span> Gold<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">String</span> <span class="token operator">=</span> <span class="token string">"AcmeCard® Gold Delight™"</span><br>    <span class="token punctuation">}</span><br>    <br>    <span class="token keyword">implicit</span> <span class="token keyword">val</span> platinumAcmeCardPrinter<span class="token operator">:</span> AcmeCardPrinter<span class="token punctuation">[</span>Platinum<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> AcmeCardPrinter<span class="token punctuation">[</span>Platinum<span class="token punctuation">]</span> <span class="token punctuation">{</span><br>        <span class="token keyword">override</span> <span class="token keyword">def</span> print<span class="token punctuation">(</span>t<span class="token operator">:</span> Platinum<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">String</span> <span class="token operator">=</span> <span class="token string">"AcmeCard® Platinum Awesomeness™"</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<p><code>UpgradeRequirementCheck</code> trait provides the points required for the next AcmeCard upgrade. It has some additional logic to determine the points required by the customer.</p>
+<pre class="language-scala"><code class="language-scala"><span class="token keyword">trait</span> UpgradeRequirementCheck<span class="token punctuation">[</span>T<span class="token punctuation">]</span> <span class="token punctuation">{</span><br>    <span class="token keyword">def</span> pointsToUpgrade<span class="token punctuation">(</span>currentPoint<span class="token operator">:</span> <span class="token builtin">Long</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Long</span><br><span class="token punctuation">}</span><br><br><span class="token keyword">object</span> UpgradeRequirementCheck <span class="token punctuation">{</span><br>    <span class="token keyword">def</span> apply<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">implicit</span> upgradeEligibility<span class="token operator">:</span> UpgradeRequirementCheck<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">=</span> upgradeEligibility<br>    <br>    <span class="token keyword">def</span> createUpgradeEligibility<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>fn<span class="token operator">:</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">=></span> <span class="token builtin">Long</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">new</span> UpgradeRequirementCheck<span class="token punctuation">[</span>T<span class="token punctuation">]</span> <span class="token punctuation">{</span><br>        <span class="token keyword">override</span> <span class="token keyword">def</span> pointsToUpgrade<span class="token punctuation">(</span>currentPoint<span class="token operator">:</span> <span class="token builtin">Long</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Long</span> <span class="token operator">=</span> <span class="token punctuation">{</span><br>            <span class="token keyword">val</span> targetPoints <span class="token operator">=</span> fn<span class="token punctuation">(</span><span class="token punctuation">)</span><br>            <span class="token keyword">if</span> <span class="token punctuation">(</span>targetPoints <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> targetPoints <span class="token operator">></span> currentPoint<span class="token punctuation">)</span><br>                targetPoints <span class="token operator">-</span> currentPoint<br>            <span class="token keyword">else</span> <span class="token number">0</span><br>        <span class="token punctuation">}</span><br>    <span class="token punctuation">}</span><br><br>    <span class="token keyword">implicit</span> <span class="token keyword">val</span> firstTimerUpgrade<span class="token operator">:</span> UpgradeRequirementCheck<span class="token punctuation">[</span>Silver<span class="token punctuation">]</span> <span class="token operator">=</span><br>        createUpgradeEligibility<span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">=></span> <span class="token number">10000L</span><span class="token punctuation">)</span><br>    <span class="token keyword">implicit</span> <span class="token keyword">val</span> frequentShopperUpgrade<span class="token operator">:</span> UpgradeRequirementCheck<span class="token punctuation">[</span>Gold<span class="token punctuation">]</span> <span class="token operator">=</span><br>        createUpgradeEligibility<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">=></span> <span class="token number">100000L</span><span class="token punctuation">)</span><br>    <span class="token keyword">implicit</span> <span class="token keyword">val</span> patronDUpgrade<span class="token operator">:</span> UpgradeRequirementCheck<span class="token punctuation">[</span>Platinum<span class="token punctuation">]</span> <span class="token operator">=</span><br>        createUpgradeEligibility<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">=></span> <span class="token number">0L</span><span class="token punctuation">)</span> <br><span class="token punctuation">}</span></code></pre>
+<p>Now let’s revisit our story. Given a member, we need to display his/her <em>AcmeCard information, the points required for the next upgrade and the discount applicable</em> for further purchases. We have <code>Member</code> type to work with but our traits <code>UpgradeRequirementCheck</code>,<code>AcmeCardPrinter</code> and <code>Discounted</code> work with <code>AcmeCard</code> type. We need to find a way to map <code>Member</code> to AcmeCard. Given a <code>Member</code>, we need to find the appropriate <code>AcmeCard</code> and then have Scala figure out relevant instances for traits <code>UpgradeRequirementCheck</code>,<code>AcmeCardPrinter</code> and <code>Discounted</code>.</p>
+<p><strong>For type mapping</strong>, let’s introduce <code>Privilege</code> trait which provides a way to capture the mapped type in a publicly exposed type variable.</p>
+<pre class="language-scala"><code class="language-scala"><span class="token keyword">trait</span> Privilege<span class="token punctuation">[</span>T<span class="token punctuation">]</span> <span class="token punctuation">{</span> <br>    <span class="token keyword">type</span> OutType<br>    <span class="token keyword">def</span> getMember<span class="token punctuation">(</span>t<span class="token operator">:</span> T<span class="token punctuation">)</span><span class="token operator">:</span> OutType<br><span class="token punctuation">}</span><br><span class="token keyword">object</span> Privilege <span class="token punctuation">{</span> <br>    <span class="token keyword">type</span> Aux<span class="token punctuation">[</span>T<span class="token punctuation">,</span> R<span class="token punctuation">]</span> <span class="token operator">=</span> Privilege<span class="token punctuation">[</span>T<span class="token punctuation">]</span> <span class="token punctuation">{</span> <br>        <span class="token keyword">type</span> OutType <span class="token operator">=</span> R<br>    <span class="token punctuation">}</span><br>    <br>    <span class="token keyword">def</span> apply<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">implicit</span> privilege<span class="token operator">:</span> Privilege<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">:</span> Aux<span class="token punctuation">[</span>T<span class="token punctuation">,</span> privilege<span class="token punctuation">.</span>OutType<span class="token punctuation">]</span> <span class="token operator">=</span> privilege<br>    <br>    <span class="token keyword">implicit</span> <span class="token keyword">def</span> materializeSilverCard<span class="token punctuation">[</span>R<span class="token punctuation">]</span><span class="token operator">:</span> Aux<span class="token punctuation">[</span>FirstTimer<span class="token punctuation">,</span>Silver<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> Privilege<span class="token punctuation">[</span>FirstTimer<span class="token punctuation">]</span> <span class="token punctuation">{</span> <br>        <span class="token keyword">type</span> OutType <span class="token operator">=</span> Silver<br>        <span class="token keyword">override</span> <span class="token keyword">def</span> getMember<span class="token punctuation">(</span>t<span class="token operator">:</span> FirstTimer<span class="token punctuation">)</span><span class="token operator">:</span> OutType <span class="token operator">=</span> Silver<span class="token punctuation">(</span>t<span class="token punctuation">.</span>member<span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br>    <br>    <span class="token keyword">implicit</span> <span class="token keyword">def</span> materializeGoldCard<span class="token punctuation">[</span>R<span class="token punctuation">]</span><span class="token operator">:</span> Aux<span class="token punctuation">[</span>FrequentShopper<span class="token punctuation">,</span>Gold<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> Privilege<span class="token punctuation">[</span>FrequentShopper<span class="token punctuation">]</span> <span class="token punctuation">{</span><br>        <span class="token keyword">type</span> OutType <span class="token operator">=</span> Gold<br>        <span class="token keyword">override</span> <span class="token keyword">def</span> getMember<span class="token punctuation">(</span>t<span class="token operator">:</span> FrequentShopper<span class="token punctuation">)</span><span class="token operator">:</span> OutType <span class="token operator">=</span> Gold<span class="token punctuation">(</span>t<span class="token punctuation">.</span>member<span class="token punctuation">)</span> <br>    <span class="token punctuation">}</span><br>    <br>    <span class="token keyword">implicit</span> <span class="token keyword">def</span> materializePlatinumCard<span class="token punctuation">[</span>R<span class="token punctuation">]</span><span class="token operator">:</span> Aux<span class="token punctuation">[</span>Patron<span class="token punctuation">,</span>Platinum<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> Privilege<span class="token punctuation">[</span>Patron<span class="token punctuation">]</span> <span class="token punctuation">{</span> <br>        <span class="token keyword">type</span> OutType <span class="token operator">=</span> Platinum<br>        <span class="token keyword">override</span> <span class="token keyword">def</span> getMember<span class="token punctuation">(</span>t<span class="token operator">:</span> Patron<span class="token punctuation">)</span><span class="token operator">:</span> OutType <span class="token operator">=</span> Platinum<span class="token punctuation">(</span>t<span class="token punctuation">.</span>member<span class="token punctuation">)</span><br>    <span class="token punctuation">}</span><br><span class="token punctuation">}</span></code></pre>
+<blockquote>
+<p>The design pattern is also known as <a href="http://gigiigig.github.io/posts/2015/09/13/aux-pattern.html">Aux Pattern</a> and is an important tool in your tool-set. You will invariably use Aux pattern when working with type-level programming.</p>
+</blockquote>
+<p>With <code>Privilege</code> defined, we can see below how the type conversion would happen on runtime and also how we get the corresponding AcmeCard for a given member type.</p>
+<pre class="language-scala"><code class="language-scala"><span class="token comment">//members</span><br><span class="token keyword">val</span> johnDoe <span class="token operator">=</span> FirstTimer<span class="token punctuation">(</span>Member<span class="token punctuation">(</span><span class="token string">"123456"</span><span class="token punctuation">,</span><span class="token string">"John Doe"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><br><span class="token keyword">val</span> janeDoe <span class="token operator">=</span> FrequentShopper<span class="token punctuation">(</span>Member<span class="token punctuation">(</span><span class="token string">"567890"</span><span class="token punctuation">,</span><span class="token string">"Jane Doe"</span><span class="token punctuation">,</span> <span class="token number">50500</span><span class="token punctuation">)</span><span class="token punctuation">)</span><br><br><span class="token comment">//A sample function to get a mapper to give a AcmeCard of type R for a member of type T</span><br><span class="token keyword">def</span> getPrivilegeType<span class="token punctuation">[</span>T<span class="token punctuation">,</span>R<span class="token punctuation">]</span><span class="token punctuation">(</span>member<span class="token operator">:</span> T<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">implicit</span> privilege<span class="token operator">:</span> Privilege<span class="token punctuation">.</span>Aux<span class="token punctuation">[</span>T<span class="token punctuation">,</span>R<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">=</span>privilege<br><br>getPrivilegeType<span class="token punctuation">(</span>janeDoe<span class="token punctuation">)</span><br><span class="token comment">/*res0: Privilege.Aux[FrequentShopper,Gold] = Privilege$$anon$2@2039920d*/</span><br><br>getPrivilegeType<span class="token punctuation">(</span>johnDoe<span class="token punctuation">)</span><br><span class="token comment">/*res0: Privilege.Aux[FirstTimer,Silver] = Privilege$$anon$1@3599162f*/</span></code></pre>
+<p>All we need to do now is to forward this type to the respective downstream handlers and Scala compiler can take care of the rest! Let’s take a look at the final piece:</p>
+<pre class="language-scala"><code class="language-scala"><span class="token keyword">def</span> getMembershipInformation<span class="token punctuation">[</span>T <span class="token operator">&lt;</span><span class="token operator">:</span> MemberType<span class="token punctuation">,</span>R<span class="token punctuation">]</span><span class="token punctuation">(</span>memberType<span class="token operator">:</span> T<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">implicit</span><br>    privileged<span class="token operator">:</span> Privilege<span class="token punctuation">.</span>Aux<span class="token punctuation">[</span>T<span class="token punctuation">,</span>R<span class="token punctuation">]</span><span class="token punctuation">,</span><br>    printer<span class="token operator">:</span> AcmeCardPrinter<span class="token punctuation">[</span>R<span class="token punctuation">]</span><span class="token punctuation">,</span><br>    upgradeEligibility<span class="token operator">:</span> UpgradeRequirementCheck<span class="token punctuation">[</span>R<span class="token punctuation">]</span><span class="token punctuation">,</span><br>    discounted<span class="token operator">:</span> Discounted<span class="token punctuation">[</span>R<span class="token punctuation">]</span> <span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">String</span> <span class="token operator">=</span> <span class="token punctuation">{</span><br>        <span class="token keyword">val</span> pointsToUpgrade <span class="token operator">=</span> upgradeEligibility<span class="token punctuation">.</span>pointsToUpgrade<span class="token punctuation">(</span>memberType<span class="token punctuation">.</span>member<span class="token punctuation">.</span>points<span class="token punctuation">)</span><br>        <span class="token keyword">val</span> discount <span class="token operator">=</span> discounted<span class="token punctuation">.</span>getDiscount<br>        <span class="token keyword">val</span> cardName <span class="token operator">=</span> printer<span class="token punctuation">.</span>print<span class="token punctuation">(</span>privileged<span class="token punctuation">.</span>getMember<span class="token punctuation">(</span>memberType<span class="token punctuation">)</span><span class="token punctuation">)</span><br>        <span class="token keyword">val</span> memberName <span class="token operator">=</span> memberType<span class="token punctuation">.</span>member<span class="token punctuation">.</span>name<br>        <br>        s<span class="token string">"Dear $memberName\n"</span> <span class="token operator">+</span> s<span class="token string">"You are proud owner of $cardName\n"</span> <span class="token operator">+</span> s<span class="token string">"We have applied special discount of $discount%\n"</span> <span class="token operator">+</span> s<span class="token string">"Psst! you need $pointsToUpgrade points for next upgrade!"</span><br><span class="token punctuation">}</span></code></pre>
+<p>What’s going on here? When Scala sees a call for <code>getMembershipInformation</code> for a given <code>Member</code>, it tries to bring (import or create) a <code>Privilege.Aux</code> type into scope. As we have seen above, The Aux will provide the <code>AcmeCard</code> type in R. This <em>“captured&quot;</em> type can be further used in the <em>same call scope</em> to import or instantiate other required implicit instances.</p>
+<p>Let’s see this in action:</p>
+<pre class="language-scala"><code class="language-scala"><span class="token keyword">import</span> AcmeCardPrinter<span class="token punctuation">.</span>_<br><span class="token keyword">import</span> Privilege<span class="token punctuation">.</span>_<br><span class="token keyword">import</span> Discounted<span class="token punctuation">.</span>_<br><span class="token keyword">import</span> UpgradeRequirementCheck<span class="token punctuation">.</span>_<br><br>getMembershipInformation<span class="token punctuation">(</span>johnDoe<span class="token punctuation">)</span><br><span class="token comment">/*res0: String =<br>Dear John Doe<br>You are proud owner of AcmeCard® Silver Start™<br>We have applied special discount of 5.0%<br>Psst! you need 10000 points for next upgrade!*/</span><br><br>getMembershipInformation<span class="token punctuation">(</span>janeDoe<span class="token punctuation">)</span><br><span class="token comment">/*res0: String =<br>Dear Jane Doe<br>You are proud owner of AcmeCard® Gold Delight™<br>We have applied special discount of 10.0%<br>Psst! you need 49500 points for next upgrade!*/</span></code></pre>
+<p>And that marks our story done (Dev Done at least)!.</p>
+<p>We created highly disconnected components, defined our business domain using constrained implicit methods. Any change in such setup, will provide feedback at compile time and ensure that application sanity (domain-wise) is not compromised. Type-level programming is a very effective tool which, I firmly believe, has a place in writing domain rich applications, not just frameworks. Give it a shot!</p>
+
+  </p>
+  <hr><div class="publications">
+    <p>This story was also published in:</p>
+      <ul>
+        
+        <li class="p-0"><a target="_blank" href="https://www.signifytechnology.com/blog/2019/08/scala-snippets-number-2-dependent-types-in-scala-a-practical-example-by-manish-katoch" >Signify Technology</a></li>
+        
+      </ul>
+  </div><ul class="post-nav">
+      <li class="next">
+        <a href="/tech/introducing-scala-cypher-dsl/">Introducing Scala Cypher DSL</a>
+        <i class="fas fa-chevron-right tinted"></i>
+      </li>
+    
+      <li class="previous">
+        <i class="fas fa-chevron-left tinted"></i>
+        <a href="/tech/instanitable-implicits-in-scala/">Instantiable Implicits in Scala</a>
+      </li>
+    
+  </ul>
+</section>
+       </div>
+      </div>
+  </section>
+    <section class="container-fluid p-0">
+      
+    </section>
+    
+    <section class="container-fluid dark-bg align-items-center mk-footer">
+        <div class="row d-flex align-items-center p-0 mx-auto">
+            <div class="col-lg-3 padded-col">
+                <img class="hero d-block mx-auto" src="/images/about_me.jpg" />
+            </div>
+            <div class="col-lg-6 padded-col">
+                <section class="bio">
+                    I'm <b>Manish Katoch</b>.<br/><br/>
+          I am a polyglot software developer who loves and strives to write simple, clean and testable code.<br/><br/>
+          As a developer, I am partial towards Scala,
+          Kotlin and everything functional. I also enjoy developing mobile applications and frameworks.<br/>
+          As tech lead, I have collaborated with some of the key players in the Travel, BFSI and Consumer Electronics domain to build teams that create mission-critical, consumer enriching products/platforms.
+          <br/><br/>
+          previously worked with NVIDIA and ThoughtWorks, I currently work with a startup with a mission to make Industry 4.0 better.
+        
+                </section>
+            </div>
+            <div class="col-lg-1 padded-col"></div>
+            <div class="col-lg-2 padded-col">
+                
+    
+        <span>I'm reachable!</span><br/><br/>
+        <ul class="list-unstyled p-10">
+            
+    
+      
+        <li><a target="_blank" href="mailTo:manish.katoch@gmail.com">
+      
+        <span><i class="fas fa-envelope-square"></i> Email</span>
+    
+      </a></li>
+    
+    
+      
+        <li><a target="_blank" href="https://www.linkedin.com/in/manishkkatoch/">
+      
+        <span><i class="fab fa-linkedin"></i> LinkedIn</span>
+    
+      </a></li>
+    
+    
+      
+        <li><a target="_blank" href="https://twitter.com/m_the_katoch">
+      
+        <span><i class="fab fa-twitter-square"></i> Twitter</span>
+    
+      </a></li>
+    
+    
+      
+        <li><a target="_blank" href="https://medium.com/@manish.katoch">
+      
+        <span><i class="fab fa-medium"></i> Medium</span>
+    
+      </a></li>
+    
+    
+    
+        </ul>
+        <br/>
+        <span>currently in:<span><br/>
+        <span>Berlin, Germany</span>
+    
+    
+            </div>
+        </div>
+        <div class="row d-flex align-items-center p-40 mx-auto copy">
+            <p>&copy; Manish Katoch 2020</p>
+        </div>
+    </section>
+  
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>

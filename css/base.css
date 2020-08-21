@@ -1,0 +1,75 @@
+:root {
+  --dark-bg: #000;
+  --light-fg: #fff;
+  --light-gray: rgb(128, 128, 128);
+  --content-width: 76rem;
+  --hero-font:"Roboto Slab", serif;
+  --tint-color:#10adc5;
+  --tint-background-color:#10adc510;
+}
+
+a {
+  font-family: "Roboto Slab", serif;
+  color:#10adc5;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: blue;
+}
+
+a.nav-link {
+  font-size: larger;
+  color: white;
+  border: solid 1px transparent;
+  margin: 10px 15px;
+}
+
+a.nav-link:hover {
+  color:var(--tint-color);
+}
+
+pre {
+  padding-left:15px;
+}
+
+.navbar-brand {
+  font-size: 2rem;
+  font-family: "Roboto Slab", sans-serif;
+  margin-left: 20px;
+}
+
+.brand-logo {
+  width: 72px;
+  height: 72px;
+}
+
+.brand-bg {
+  fill: var(--tint-color);
+  fill-opacity: 1;
+}
+
+.navbar {
+  width: var(--content-width);
+  margin: auto;
+}
+
+.navbar-brand > img.hero {
+  width: 60px;
+  height: 60px;
+  border: solid 0.1rem;
+  border-radius: 50%;
+  border-color: darkgray;
+  object-fit: cover;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  /* background: none; */
+  
+}
+
+.navbar-toggler {
+  border-color:white;
+} 

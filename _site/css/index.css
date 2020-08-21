@@ -1,0 +1,9 @@
+:root {
+  --dark-bg: #000;
+  --light-fg: #fff;
+  --content-width: 76rem;
+}
+
+.full {
+  height: 100vh;
+}
