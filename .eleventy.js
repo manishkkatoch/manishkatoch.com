@@ -72,8 +72,8 @@ module.exports = function(eleventyConfig) {
     let stats = await Image(src, {
       widths: width,
       formats: ["jpeg"],
-      urlPath: "/img/",
-      outputDir: "./img/",
+      urlPath: "/images/",
+      outputDir: "_site/images/",
     });
 
     let sets = stats["jpeg"].map(i => i.srcset).join(",");
