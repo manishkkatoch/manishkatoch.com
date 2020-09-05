@@ -166,9 +166,8 @@ section.post p img {
     section.post img.banner {
         height: 30vh;
     }
-    .col-lg-12, .main-row {
-        padding: 0px;
-        margin: 0px;
+    .col-lg-12 {
+        padding: 10px;
     }
 }
 

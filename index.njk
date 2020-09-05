@@ -2,7 +2,17 @@
 layout: layouts/home.njk
 ---
 
+<section class="row">
+  <div class="col-lg-6">
 {% set collectionTitle = "Dev blogs" %}
 {% set moreLink = "/devblogs" %}
 {% set postslist = collections.devblogs %}
 {% include "post-list.njk" %}
+</div>
+<div class="col-lg-6">
+{% set collectionTitle = "PLaybooks" %}
+{% set moreLink = "/playbooks" %}
+{% set postslist = collections.playbooks %}
+{% include "post-list.njk" %}
+</div>
+</section>

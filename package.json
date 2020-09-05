@@ -1,5 +1,5 @@
 {
-    "name": "katoch.dev",
+    "name": "manishkatoch.com",
     "version": "1.0.0",
     "description": "",
     "scripts": {
@@ -16,10 +16,10 @@
     "author": {
       "name": "Manish Katoch",
       "email": "manish.katoch@gmail.com",
-      "url": "https://katoch.dev/"
+      "url": "https://manishkatoch.com/"
     },
     "license": "MIT",
-    "homepage": "https://katoch.dev/",
+    "homepage": "https://manishkatoch.com/",
     "devDependencies": {
       "@11ty/eleventy": "^0.11.0",
       "@11ty/eleventy-img":"latest",

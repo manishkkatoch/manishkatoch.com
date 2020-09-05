@@ -9,14 +9,14 @@
     </div>
   </div>
   {%- if listView -%}
-  <div class="col-lg-6" style="margin-bottom: 2rem;">
+  <div class="col-lg-12" style="margin-bottom: 2rem;">
   {% set post = posts | first %}
-    <div class="post-div">
+    <div class="post-div first-post">
       {% rI post.data.image, post.data.title, [750, 1200], "post-hero", post.url %}
       {% include "layouts/post-view.njk" %}
     </div>
   </div>
-  <div class="col-lg-6" style="margin-bottom: 2rem;">
+  <div class="col-lg-12" style="margin-bottom: 2rem;">
     <div class="row">
       {% for post in posts | shift | head(3) %}
         <div class="col-lg-12" style="margin-bottom: 2rem;">
@@ -30,7 +30,7 @@
   </div>
   {%- else -%}
     {% for post in postslist | reverse %}
-    <div class="col-md-6" style="margin-bottom: 2rem;">
+    <div class="col-md-12" style="margin-bottom: 2rem;">
         <div class="post-div">
           {% rI post.data.image, post.data.title, [750, 1200], "post-hero", post.url %}
           {% include "layouts/post-view.njk" %}

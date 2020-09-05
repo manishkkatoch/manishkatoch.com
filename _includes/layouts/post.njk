@@ -3,11 +3,15 @@ layout: layouts/base.njk
 ---
 
 <section class="container-fluid align-items-center post" >
+ {% if (noBanner or true) and noBanner != true %}
   <img src="{{ image | url }}" class="banner"/>
+  {%- if imageCredit -%}
   <div class="credit">
     <a target="_blank" rel="noopener" href="{{ imageCredit | linkUrl }}">{{ imageCredit | linkName }}</a> on 
     <a target="_blank" rel="noopener" href="{{ imageSource | linkUrl }}">{{ imageSource | linkName }} </a>
   </div>
+  {% endif %}
+  {% endif %}
   <h1>{{ title }}
   </h1>
 

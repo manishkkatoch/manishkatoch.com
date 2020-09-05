@@ -1,5 +1,8 @@
 const { DateTime } = require("luxon");
+const Nunjucks = require("nunjucks");
+const sharp = require("sharp");
 const fs = require("fs");
+const path = require("path");
 const CleanCSS = require("clean-css");
 const Image = require("@11ty/eleventy-img");
 const pluginSEO = require("eleventy-plugin-seo");
@@ -7,15 +10,30 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
 const pluginNavigation = require("@11ty/eleventy-navigation");
-const customBlock = require('markdown-it-custom-block')
+const customBlock = require('markdown-it-custom-block');
+const { pathToFileURL } = require("url");
+const { randomBytes } = require("crypto");
 
 module.exports = function(eleventyConfig) {
-  // eleventyConfig.addPlugin(pluginRss);
-  // eleventyConfig.addPlugin(pluginSyntaxHighlight);
-  // eleventyConfig.addPlugin(pluginNavigation);
+
+  const nunjucksEnvironment = new Nunjucks.Environment(
+    new Nunjucks.FileSystemLoader(["_includes","."]), // we need to pass in our includes dir here
+    {
+      lstripBlocks: true,
+      trimBlocks: true,
+      autoescape: false
+    }
+  );
+
+  eleventyConfig.setLibrary("njk", nunjucksEnvironment);
+  eleventyConfig.addFilter('readFile', (src) => {
+    console.log("src => ", src, process.cwd(), path.resolve(src));
+    return fs.readFileSync(path.resolve(src));
+  });
 
   eleventyConfig.setDataDeepMerge(true);
 
+  
   eleventyConfig.addLayoutAlias("post", "layouts/post.njk");
   eleventyConfig.addPlugin(pluginNavigation);
   eleventyConfig.addPlugin(pluginSEO, {
@@ -100,6 +118,7 @@ module.exports = function(eleventyConfig) {
             case "nav":
             case "post":
             case "devblogs":
+            case "playbooks":
               return false;
           }
 
@@ -153,7 +172,7 @@ module.exports = function(eleventyConfig) {
       "liquid"
     ],
 
-    markdownTemplateEngine: "liquid",
+    markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk",
     dataTemplateEngine: "njk",
 
@@ -162,7 +181,8 @@ module.exports = function(eleventyConfig) {
       input: ".",
       includes: "_includes",
       data: "_data",
-      output: "_site"
+      output: "_site",
+      autoescape: false
     }
   };
 };
