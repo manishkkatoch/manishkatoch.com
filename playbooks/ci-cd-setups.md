@@ -1,6 +1,6 @@
 ---
 title: CI CD Workflows
-excerpt: An example by which we demonstrate how we can add constraints to business domain for compile time validation of business logic!
+excerpt: A handy list of ways to setup CI/CD work flow for your dev teams.
 image: https://source.unsplash.com/aJfOuWeNzko/1600x900
 imageCredit: Bas van den Eijkhof | https://unsplash.com/@basvde
 imageSource: Unsplash | https://unsplash.com
