@@ -1,0 +1,13 @@
+---
+permalink: /tags/
+layout: layouts/home.njk
+eleventyExcludeFromCollections: true
+---
+<section class="row p-10 tag-div">
+{% for tag in collections.tagList | sort %}
+  {% set tagUrl %}/tags/{{ tag }}/{% endset %}
+  <div class="col-md-4">
+  <a href="{{ tagUrl | url }}" class="tag-ref">{{ tag }}</a>
+  </div>
+{% endfor %}
+</section>

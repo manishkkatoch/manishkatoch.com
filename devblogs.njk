@@ -1,0 +1,18 @@
+---
+layout: layouts/base.njk
+permalink: /devblogs/
+eleventyNavigation:
+  key:  Devblogs
+  order: 2
+---
+<div class="row tag-view">
+{% set postslist = collections.devblogs %}
+  {% for post in postslist | reverse %}
+  <div class="col-lg-6 tag-post" style="margin-bottom: 2rem;">
+      <div class="post-div">
+        {% rI post.data.image, post.data.title, [750, 1200], "post-hero",post.url %}
+        {% include "layouts/post-view.njk" %}
+    </div>
+  </div>
+  {% endfor %}
+</div>

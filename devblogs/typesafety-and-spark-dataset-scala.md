@@ -1,16 +1,15 @@
 ---
 title: Type safety and Spark Datasets in Scala
-titleImage:
-    url: https://source.unsplash.com/WeA1uHnzf60/1600x900
-    credits: Tuân Nguyễn Minh | https://unsplash.com/@tuannguyenminh
-    source: Unsplash | https://unsplash.com
-description: An example by which we demonstrate how we can add constraints to business domain for compile time validation of business logic!
+excerpt: Making Datasets in Spark generically type safe!
+image: https://source.unsplash.com/WeA1uHnzf60/1600x900
+imageCredit: Tuân Nguyễn Minh | https://unsplash.com/@tuannguyenminh
+imageSource: Unsplash | https://unsplash.com
 publications:
     - codeburst.io | https://codeburst.io/type-safety-and-spark-datasets-in-scala-20fa582024fc
     - Signify Technology | https://www.signifytechnology.com/blog/2019/03/type-safety-and-spark-datasets-in-scala-by-manish-katoch
 date: 2019-01-01
 layout: layouts/post.njk
-tags: ["tech", "scala", "data-engineering"]
+tags: ["devblogs", "scala", "data-engineering"]
 ---
 
 Working with Spark Datasets have been quite interesting and most of the time rewarding in our current project. It has a simple yet powerful API that abstracts out the need to code in complex transformations and computations. To be honest, we also have a fairly straightforward use case: few domain entities, fewer transformations based on simple joins.

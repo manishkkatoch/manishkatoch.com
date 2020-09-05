@@ -22,10 +22,13 @@
     "homepage": "https://katoch.dev/",
     "devDependencies": {
       "@11ty/eleventy": "^0.11.0",
+      "@11ty/eleventy-img":"latest",
       "@11ty/eleventy-navigation": "^0.1.6",
       "@11ty/eleventy-plugin-rss": "^1.0.9",
       "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1",
-      "@gerhobbelt/markdown-it-container":"latest",
+      "markdown-it-custom-block":"latest",
+      "clean-css":"latest",
+      "eleventy-plugin-seo":"latest",
       "luxon": "^1.21.3",
       "markdown-it": "^8.4.2",
       "markdown-it-anchor": "^5.2.5"

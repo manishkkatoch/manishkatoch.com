@@ -1,4 +1,4 @@
-@import "./index.css";
+@import "./base.css";
 
 section.mk-footer {
     padding: 4rem;
@@ -36,6 +36,7 @@ img.hero {
     section.mk-footer
     {
         font-size: 10px;
+        padding: 10px;
     }
     
 }
@@ -44,6 +45,7 @@ img.hero {
     section.mk-footer
     {
         font-size: 14px;
+        padding: 10px;
     }
    
 }

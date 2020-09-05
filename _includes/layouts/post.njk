@@ -1,17 +1,12 @@
 ---
 layout: layouts/base.njk
-templateClass: tmpl-post
-style:
-  - /css/home.css
-  - /css/footer.css
-  - /css/post.css
 ---
 
 <section class="container-fluid align-items-center post" >
-  <img src="{{ titleImage.url | url }}" class="banner"/>
+  <img src="{{ image | url }}" class="banner"/>
   <div class="credit">
-    <a target="_blank" href="{{ titleImage.credits | linkUrl }}">{{ titleImage.credits | linkName }}</a> on 
-    <a target="_blank" href="{{ titleImage.source | linkUrl }}">{{ titleImage.source | linkName }} </a>
+    <a target="_blank" rel="noopener" href="{{ imageCredit | linkUrl }}">{{ imageCredit | linkName }}</a> on 
+    <a target="_blank" rel="noopener" href="{{ imageSource | linkUrl }}">{{ imageSource | linkName }} </a>
   </div>
   <h1>{{ title }}
   </h1>
@@ -41,14 +36,14 @@ style:
   </div>
   {%- endif -%}
   <ul class="post-nav">
-    {%- set nextPost = collections.tech | getNextCollectionItem(page) %}
+    {%- set nextPost = collections.devblogs | getNextCollectionItem(page) %}
     {%- if nextPost %}
       <li class="next">
         <a href="{{ nextPost.url | url }}">{{ nextPost.data.title }}</a>
         <i class="fas fa-chevron-right tinted"></i>
       </li>
     {% endif %}
-    {%- set previousPost = collections.tech | getPreviousCollectionItem(page) %}
+    {%- set previousPost = collections.devblogs | getPreviousCollectionItem(page) %}
     {%- if previousPost %}
       <li class="previous">
         <i class="fas fa-chevron-left tinted"></i>

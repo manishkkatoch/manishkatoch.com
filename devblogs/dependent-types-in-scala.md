@@ -1,15 +1,14 @@
 ---
 title: Dependent Types in Scala — A practical example
-titleImage:
-    url: https://source.unsplash.com/4zwozQxDbD4/1600x900
-    credits: Guilherme Cunha | https://unsplash.com/@guiccunha
-    source: Unsplash | https://unsplash.com
-description: An example by which we demonstrate how we can add constraints to business domain for compile time validation of business logic!
+excerpt: An example by which we demonstrate how we can add constraints to business domain for compile time validation of business logic!
+image: https://source.unsplash.com/4zwozQxDbD4/1600x900
+imageCredit: Guilherme Cunha | https://unsplash.com/@guiccunha
+imageSource: Unsplash | https://unsplash.com
 publications:
     - Signify Technology | https://www.signifytechnology.com/blog/2019/08/scala-snippets-number-2-dependent-types-in-scala-a-practical-example-by-manish-katoch
 date: 2019-03-14
 layout: layouts/post.njk
-tags: ["tech", "scala", "patterns"]
+tags: ["devblogs","scala", "patterns"]
 ---
 
 Of late, I have been fascinated with type-level programming in Scala. The more I play with it, the more I get excited about it. Although most of my production implementations have been at the framework level, there is no reason why it cannot be utilized to drive business logic.

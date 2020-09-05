@@ -1,8 +1,7 @@
 ---
 title: katoch.dev
-style:
-  - /css/home.css
-  - /css/footer.css
+author: Manish Katoch
+twitter: m_the_katoch
 links:
   - icons: fas fa-envelope-square
     title: Email
@@ -26,53 +25,58 @@ location: Berlin, Germany
     <title>{{ title or metadata.title }}</title>
     <meta name="description" content="{{ description or metadata.description }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ '/css/prism.base16.monokai.dark.css' | url }}">
-    {% for css in style %}
-      <link rel="stylesheet" href="{{ css | url }}">
-    {% endfor %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400&family=Merriweather+Sans:ital,wght@0,400;0,600;1,400;1,500&family=Roboto&display=swap" >
     <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
     <link rel="alternate" href="{{ metadata.jsonfeed.path | url }}" type="application/json" title="{{ metadata.title }}">
-    <script src="https://kit.fontawesome.com/0a5d5a6a83.js" crossorigin="anonymous"></script>
+    
+    {% set css %}
+    {% include "../../css/prism.base16.monokai.dark.css" %}
+    {% include "../../css/base.css" %}
+    {% include "../../css/home.css" %}
+    {% include "../../css/footer.css" %}
+    {% include "../../css/post.css" %}
+    {% include "../../css/postview.css" %}
+    {% endset %}
+    <style>
+      {{css | cssmin | safe}}
+    </style>
+    {% seo "" %}
+
   </head>
   <body>
-  <section class="container-fluid align-items-center">
-       <div class="row dark-bg">
-       {% include "layouts/header.njk" %}
+    <section class="container-fluid align-items-center">
+      <div class="row dark-bg">
+        {% include "layouts/header.njk" %}
       </div>
       <div class="row main-row">
-      <div class="col-lg-12">
-       {{ content | safe }}
-       </div>
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-12">
+
+              {{ content | safe }}
+            </div>
+          </div>
+        </div>
       </div>
-  </section>
-    <section class="container-fluid p-0">
-      
     </section>
-    {% footer {
-        heroUrl : "/images/about_me.jpg",
-        bio: "I'm <b>Manish Katoch</b>.<br/><br/>
+    <section class="container-fluid p-0"></section>
+
+    {% set heroUrl = "/images/about_me.jpg" %}
+    {% set bio = "I'm <b>Manish Katoch</b>.<br/><br/>
           I am a polyglot software developer who loves and strives to write simple, clean and testable code.<br/><br/>
           As a developer, I am partial towards Scala,
           Kotlin and everything functional. I also enjoy developing mobile applications and frameworks.<br/>
           As tech lead, I have collaborated with some of the key players in the Travel, BFSI and Consumer Electronics domain to build teams that create mission-critical, consumer enriching products/platforms.
           <br/><br/>
           previously worked with NVIDIA and ThoughtWorks, I currently work with a startup with a mission to make Industry 4.0 better.
-        "
-      }
-    %}
-    {% contact location %}
-    {% for ln in links %}
-      {% extLinkLi ln.link %}
-      {% fontText ln.icons, ln.title %}
-      {% endextLinkLi %}
-    {% endfor %}
-    {% endcontact %}
-    {% endfooter %}
+        " %}
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    {% set links = links %}
+    {% include "layouts/footer.njk" %}
+
+    <script defer src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script defer src="https://kit.fontawesome.com/0a5d5a6a83.js" crossorigin="anonymous"></script>
   </body>
 </html>

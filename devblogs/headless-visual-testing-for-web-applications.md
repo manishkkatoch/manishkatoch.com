@@ -1,15 +1,14 @@
 ---
 title: Headless Visual Testing For Web Applications
-titleImage:
-    url: https://source.unsplash.com/U3sOwViXhkY/1600x900
-    credits: Franck V. | https://unsplash.com/@franckinjapan
-    source: Unsplash | https://unsplash.com
-description: A story of utilizing existing resources and setup a visual testing pipeline for applications.
+image: https://source.unsplash.com/U3sOwViXhkY/1600x900
+imageCredit: Franck V. | https://unsplash.com/@franckinjapan
+imageSource: Unsplash | https://unsplash.com
+excerpt: A story of utilizing existing resources and setup a visual testing pipeline for applications.
 publications:
     - codeburst.io | https://codeburst.io/headless-visual-testing-for-web-applications-9b90d125ee5b
 date: 2018-07-30
 layout: layouts/post.njk
-tags: ["tech", "automation", "testing"]
+tags: ["devblogs", "automation", "testing"]
 ---
 
 **Some time back**, A team had come across an interesting challenge. The team, let’s call them _Rangers_, had embarked on a journey creating a cross platform enterprise application which would allow them to write business logic once and deploy it as an iOS app, an Android app as well as a Web application.

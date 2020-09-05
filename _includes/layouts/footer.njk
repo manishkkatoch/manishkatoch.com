@@ -1,0 +1,29 @@
+<section class="container-fluid dark-bg align-items-center mk-footer">
+    <div class="row d-flex align-items-center p-0 mx-auto">
+        <div class="col-lg-3 padded-col">
+            {%  rI "./images/about_me.jpg", "Manish Katoch" , [350], "hero d-block mx-auto","#","_self"  %}  
+        </div>
+        <div class="col-lg-6 padded-col">
+            <section class="bio">
+                    <p>{{ bio | safe }}</p>
+                </section>
+        </div>
+        <div class="col-lg-1 padded-col"></div>
+        <div class="col-lg-2 padded-col">
+                <span>I'm reachable!</span><br/><br/>
+        <ul class="list-unstyled p-10">
+            {% for link in links %}
+                <li><a target="_blank" rel="noopener" href="{{ link.link }}">
+                    <span><i class="{{ link.icons }}"></i> {{ link.title }}</span>
+                </a></li>
+            {% endfor %}
+        </ul>
+        <br/>
+        <span>currently in:<span><br/>
+        <span>{{ location }}</span>
+            </div>
+    </div>
+    <div class="row d-flex align-items-center p-40 mx-auto copy">
+        <p>&copy; Manish Katoch 2020</p>
+    </div>
+</section>

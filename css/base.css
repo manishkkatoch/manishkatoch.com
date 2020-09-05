@@ -1,33 +1,59 @@
 :root {
   --dark-bg: #000;
+  --light-bg: rgba(155, 151, 151, 0.082);
   --light-fg: #fff;
   --light-gray: rgb(128, 128, 128);
   --content-width: 76rem;
-  --hero-font:"Roboto Slab", serif;
-  --tint-color:#10adc5;
-  --tint-background-color:#10adc510;
+  --hero-font:'Merriweather Sans', sans-serif;
+  /* --hero-font:'Bebas Neue', cursive; */
+  /* --hero-font:"Slabo 27px", serif; */
+  --text-font:"Roboto", sans-serif;
+  --code-font:'Inconsolata', monospace;
+  --tint-color:#1231e0;
+  --tint-background-color:#1231e010;
 }
 
+body, div, a, p, blockquote, ul ,li, a {
+  font-family: var(--text-font);
+}
+h1, h2, h3, h4, h5 {
+  font-family: var(--hero-font);
+}
+h1 {
+  font-size: 3rem;
+}
 a {
-  font-family: "Roboto Slab", serif;
-  color:#10adc5;
+  color:var(--tint-color);
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: none;
-  color: blue;
+  background: linear-gradient(90deg,#ff7300,#ff2776);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #ff2776;
+}
+a > svg:hover {
+  color: #ff2776;
 }
 
 a.nav-link {
-  font-size: larger;
+  font-family: var(--hero-font);
+  
   color: white;
   border: solid 1px transparent;
   margin: 10px 15px;
+  text-transform: uppercase;
 }
 
 a.nav-link:hover {
   color:var(--tint-color);
+}
+
+a.post-ref:hover {
+  color: black;
 }
 
 pre {
@@ -35,8 +61,6 @@ pre {
 }
 
 .navbar-brand {
-  font-size: 2rem;
-  font-family: "Roboto Slab", sans-serif;
   margin-left: 20px;
 }
 
@@ -55,7 +79,7 @@ pre {
   margin: auto;
 }
 
-.navbar-brand > img.hero {
+.navbar-brand  > img.hero, .navbar-brand > a > img.hero  {
   width: 60px;
   height: 60px;
   border: solid 0.1rem;
@@ -73,3 +97,29 @@ pre {
 .navbar-toggler {
   border-color:white;
 } 
+
+.tag-div {
+  padding:1rem 1rem;
+}
+
+a.tag-ref {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  /* background: var(--light-bg); */
+  border: solid 2px var(--light-bg);
+  border-radius: 0.5rem;
+  font-size: large;
+}
+
+@media all and (max-width: 375px) {
+  .tag-div > .col-md-4 {
+      margin-top: 0.5rem;
+  }
+}
+
+@media all and (min-width: 376px) and (max-width: 800px) {
+  .tag-div > .col-md-4 {
+    margin-top: 0.5rem;
+}
+}

@@ -2,5 +2,7 @@
 layout: layouts/home.njk
 ---
 
-{% set postslist = collections.tech %}
+{% set collectionTitle = "Dev blogs" %}
+{% set moreLink = "/devblogs" %}
+{% set postslist = collections.devblogs %}
 {% include "post-list.njk" %}

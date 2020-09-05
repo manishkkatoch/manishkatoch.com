@@ -1,15 +1,14 @@
 ---
 title: Instantiable Implicits in Scala
-titleImage:
-    url: https://source.unsplash.com/qjnAnF0jIGk/1200x900
-    credits: Markus Spiske | https://unsplash.com/@markusspiske
-    source: Unsplash | https://unsplash.com
-description: A review of Scala design pattern that allows you to manage context without explicit parameter declarations.
+excerpt: A review of Scala design pattern that allows you to manage context without explicit parameter declarations.
+image:  https://source.unsplash.com/qjnAnF0jIGk/1200x900
+imageCredit: Markus Spiske | https://unsplash.com/@markusspiske
+imageSource: Unsplash | https://unsplash.com
 publications:
     - codeburst.io | https://codeburst.io/scala-snippets-1-instanitable-implicits-a37dadc5a8fc
 date: 2019-02-18
 layout: layouts/post.njk
-tags: ["tech", "scala", "patterns"]
+tags: ["devblogs", "scala", "patterns"]
 ---
 
 If you have ever written non-trivial code in Scala, you would have come across methods that take implicit parameters. Implicitly passing parameter is an important aspect of Scala that provides a **contextual abstraction** to your domain. One can design the domain model by the fact that by the time of instantiation and processing the functionality of the implicitly passed parameter will be available, irrespective of how it is created or provided. Implicit parameters are defined by prefixing `implicit` keyword to the parameter of a method. all the parameters defined after the keyword are implicit to the method definition.

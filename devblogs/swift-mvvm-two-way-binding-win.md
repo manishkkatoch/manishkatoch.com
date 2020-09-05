@@ -1,15 +1,14 @@
 ---
 title: Swift + MVVM + Two Way Binding = Win!
-titleImage:
-    url: https://source.unsplash.com/ImcUkZ72oUs/1600x900
-    credits: israel palacio | https://unsplash.com/@othentikisra
-    source: Unsplash | https://unsplash.com
-description: A way to achieve two way bindings on a UIControl and Observable, so that you write the code, you want to write, not the code you have to write
+excerpt: A way to achieve two way bindings on a UIControl and Observable, so that you write the code, you want to write, not the code you have to write
+image: https://source.unsplash.com/ImcUkZ72oUs/1600x900
+imageCredit: Israel Palacio | https://unsplash.com/@othentikisra
+imageSource: Unsplash | https://unsplash.com
 publications:
     - codeburst.io | https://codeburst.io/swift-mvvm-two-way-binding-win-b447edc55ff5
 date: 2017-11-26
 layout: layouts/post.njk
-tags: ["tech", "mobile", "ios", "swift"]
+tags: ["devblogs", "mobile", "ios", "swift","featured"]
 ---
 
 MVVM? why not MVC that Apple recommends? Android does MVP great right? How about the cool VIPER pattern? I believe great efforts have already been put to explain what each pattern brings to the table and so the idea here is not to add to the debate but merely build on top of the opinion I have already formed: _MVVM is the way to go_.
