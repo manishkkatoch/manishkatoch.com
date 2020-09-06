@@ -43,7 +43,7 @@ module.exports = function(eleventyConfig) {
     url: "https://www.manishkatoch.com",
     author: "Manish Katoch",
     twitter: "m_the_katoch",
-    image: "/images/about_me.jpeg"
+    image: "https://www.manishkatoch.com/images/about_me.jpeg"
   });
   eleventyConfig.addFilter("readableDate", dateObj => {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("dd LLL yyyy");
