@@ -42,8 +42,7 @@ module.exports = function(eleventyConfig) {
     description: "A collection of learnings of Manish Katoch",
     url: "https://www.manishkatoch.com",
     author: "Manish Katoch",
-    twitter: "m_the_katoch",
-    image: "https://www.manishkatoch.com/images/about_me.jpeg"
+    twitter: "m_the_katoch"
   });
   eleventyConfig.addFilter("readableDate", dateObj => {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("dd LLL yyyy");
@@ -82,7 +81,7 @@ module.exports = function(eleventyConfig) {
     return linkString.split("|").map(x => x.trim()).reverse().shift();
   });
 
-  eleventyConfig.addNunjucksAsyncShortcode('rI', async function(src, alt, width, classes, url="", target="_blank") {
+  eleventyConfig.addNunjucksAsyncShortcode('rI', async function(src, alt, width, classes, url="", target="_self") {
     if(alt === undefined) {
       // You bet we throw an error on missing alt (alt="" works okay)
       throw new Error(`Missing \`alt\` on rImage from: ${src}`);
