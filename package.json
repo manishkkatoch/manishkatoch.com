@@ -16,10 +16,10 @@
     "author": {
       "name": "Manish Katoch",
       "email": "manish.katoch@gmail.com",
-      "url": "https://manishkatoch.com/"
+      "url": "https://www.manishkatoch.com/"
     },
     "license": "MIT",
-    "homepage": "https://manishkatoch.com/",
+    "homepage": "https://www.manishkatoch.com/",
     "devDependencies": {
       "@11ty/eleventy": "^0.11.0",
       "@11ty/eleventy-img":"latest",

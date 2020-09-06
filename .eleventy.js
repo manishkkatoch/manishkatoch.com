@@ -38,11 +38,12 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginNavigation);
   eleventyConfig.addPlugin(pluginSEO, {
     title: "Manish Katoch",
-    description: "Blog of Manish Katoch.",
-    url: "https://manishkatoch.com",
+    site_name: "Manish Katoch",
+    description: "A collection of learnings of Manish Katoch",
+    url: "https://www.manishkatoch.com",
     author: "Manish Katoch",
     twitter: "m_the_katoch",
-    image: "./images/about_me.jpeg"
+    image: "/images/about_me.jpeg"
   });
   eleventyConfig.addFilter("readableDate", dateObj => {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("dd LLL yyyy");
