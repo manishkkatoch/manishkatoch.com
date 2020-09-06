@@ -1,4 +1,4 @@
-<a class="post-ref" href="{{ post.url | url }}">
+<a class="post-ref" alt="{{ post.data.title | safe }}" href="{{ post.url | url }}">
   <h2>{{ post.data.title }}</h2>
   <p>{{ post.data.excerpt | safe }}</p>
   <div class="tag-list">
