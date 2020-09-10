@@ -1,6 +1,7 @@
 <a class="post-ref" alt="{{ post.data.title | safe }}" href="{{ post.url | url }}">
   <h2>{{ post.data.title }}</h2>
   <p>{{ post.data.excerpt | safe }}</p>
+</a>
   <div class="tag-list">
     {% for tag in post.data.tags %}
       {%- if collections.tagList.indexOf(tag) != -1 -%}
@@ -10,4 +11,3 @@
     {% endfor %}
     <time class="postlist-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | htmlShortDate }}</time>
   </div>
-</a>

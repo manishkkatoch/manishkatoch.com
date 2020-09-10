@@ -5,7 +5,7 @@ image: https://source.unsplash.com/aJfOuWeNzko/1600x900
 imageCredit: Bas van den Eijkhof | https://unsplash.com/@basvde
 imageSource: Unsplash | https://unsplash.com
 publications:
-date: 2019-03-14
+date: 2020-09-05
 layout: layouts/post.njk
 tags: ["playbooks","practices"]
 ---

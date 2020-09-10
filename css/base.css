@@ -1,102 +1,154 @@
 :root {
-  --dark-bg: #000;
+  --nav-color:#000;
+  --text-color: #657b83;
+  --secondary-text-color:#93a1a1;
+  --em-text-color: #586e75;
+  --yellow-color: #b58900;
+  --bg-color: #fdf6e3;
+  --dark-bg: #fdf6e3;
   --light-bg: rgba(155, 151, 151, 0.082);
   --light-fg: #fff;
   --light-gray: rgb(128, 128, 128);
   --content-width: 76rem;
-  --hero-font:'Merriweather Sans', sans-serif;
-  /* --hero-font:'Bebas Neue', cursive; */
-  /* --hero-font:"Slabo 27px", serif; */
-  --text-font:"Roboto", sans-serif;
+  --hero-font:'PT Sans Narrow', sans-serif;
+  --text-font:"PT Sans", sans-serif;
   --code-font:'Inconsolata', monospace;
-  --tint-color:#1231e0;
+  --tint-color:#657b83;
+  --accent-color: #2aa198;
   --tint-background-color:#1231e010;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1.2em;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
 }
 
 body, div, a, p, blockquote, ul ,li, a {
   font-family: var(--text-font);
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 h1, h2, h3, h4, h5 {
   font-family: var(--hero-font);
+  color: var(--em-text-color);
 }
+
 h1 {
   font-size: 3rem;
 }
-a {
-  color:var(--tint-color);
+
+a, a:hover {
+  color: var(--text-color);
+  padding: 2px 5px;
+  position: relative;
   text-decoration: none;
+  border-bottom: solid 2px var(--accent-color);
+  transition: background-color 0.2s ease-in-out 0s;
 }
 
 a:hover {
-  text-decoration: none;
-  background: linear-gradient(90deg,#ff7300,#ff2776);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: #ff2776;
+  border-radius: 3px;
+  background-color: var(--accent-color);
+  color: var(--bg-color);
 }
+a:hover > .tinted {
+  color: var(--bg-color);
+}
+
+.navbar {
+  margin:auto;
+  margin-top:1em;
+  margin-bottom: 1em;
+  display: inline-block;
+}
+
+.navbar-nav, .nav-item {
+  display: inline-block;
+}
+
+.nav-item {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
 a > svg:hover {
-  color: #ff2776;
+  color: var(--accent-color);
 }
 
 a.nav-link {
   font-family: var(--hero-font);
-  
-  color: white;
-  border: solid 1px transparent;
-  margin: 10px 15px;
+  color: var(--nav-color);
+  border: unset;
   text-transform: uppercase;
+  font-size: larger;
+  padding: 5px;
 }
 
 a.nav-link:hover {
-  color:var(--tint-color);
+  background: unset;
 }
+
+a.nav-link::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--accent-color);
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.2s ease-in-out 0s;
+}
+
+a.nav-link:hover::before {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
 
 a.post-ref:hover {
   color: black;
+  background: unset;
 }
 
 pre {
   padding-left:15px;
 }
-
-.navbar-brand {
-  margin-left: 20px;
-}
-
-.brand-logo {
-  width: 72px;
-  height: 72px;
-}
-
-.brand-bg {
-  fill: var(--tint-color);
-  fill-opacity: 1;
-}
-
-.navbar {
-  width: var(--content-width);
-  margin: auto;
-}
-
-.navbar-brand  > img.hero, .navbar-brand > a > img.hero  {
-  width: 60px;
-  height: 60px;
-  border: solid 0.1rem;
-  border-radius: 50%;
-  border-color: darkgray;
-  object-fit: cover;
-}
-
-.navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-  /* background: none; */
-  
-}
-
-.navbar-toggler {
-  border-color:white;
-} 
 
 .tag-div {
   padding:1rem 1rem;
@@ -123,3 +175,4 @@ a.tag-ref {
     margin-top: 0.5rem;
 }
 }
+

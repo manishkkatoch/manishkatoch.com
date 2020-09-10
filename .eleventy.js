@@ -97,7 +97,7 @@ module.exports = function(eleventyConfig) {
     let sets = stats["jpeg"].map(i => i.srcset).join(",");
     sizes = width.map(w => "(max-width: " + (w + 10) + "px) " + w + "w").join(",");
     let code = `
-    <a href="${url}" target="${target}" rel="noopener" >
+    <a href="${url}" class="img-ref" target="${target}" rel="noopener" >
       <img alt="${alt}" src="${stats["jpeg"][0].url}" class="${classes}" srcset="${sets}"/>
     </a>
     `;

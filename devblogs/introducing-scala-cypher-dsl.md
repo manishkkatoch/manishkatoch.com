@@ -1,9 +1,9 @@
 ---
 title: Introducing Scala Cypher DSL
 excerpt: Introducing a framework which allows writing type safe complex Neo4J Cypher queries in Scala.
-image: ./images/cypher.jpg
-imageCredit: Joel Naren | https://unsplash.com/@joeljnaren
-imageSource: Unsplash | https://unsplash.com
+image: https://lh3.googleusercontent.com/pw/ACtC-3eOGvCKJHHqBOtgPUrSNH9nJJUtEehpltyS4FqUR9SElOTQljAUFGKHMMBcnXTHDZEn3Dk6YCyFMvoDdOjfwp6eXa5uc8O5u8B0UHca07VfHwGGb02YW18WZDopMF-x1Pgn27hcQ_ieMYHpL6uDa39S=w1280-h720-no?authuser=0
+imageCredit: alxv1 | https://www.wallpaperup.com/member/profile/46456
+imageSource: WallpaperUp | https://www.wallpaperup.com
 date: 2019-07-19
 publications:
     - Neo4J Developer Blog| https://medium.com/neo4j/introducing-scala-cypher-dsl-51d28588cd51

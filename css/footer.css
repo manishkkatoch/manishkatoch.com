@@ -1,37 +1,73 @@
 @import "./base.css";
 
-section.mk-footer {
-    padding: 4rem;
-    font-family: var(--hero-font);
-    text-align: justify;
+.row.mx-auto.footer-row {
+  margin: auto;
+  max-width: 76rem;
+  padding-top:5rem;
 }
 
-section.mk-footer>div:first-child {
-    max-width: var(--content-width);
-    margin: auto;
+.row.mx-auto.footer-row > .padded-col {
+  padding: 15px;
 }
 
-section.mk-footer > .row > .padded-col {
-    padding: 15px;
+.footer-row > .padded-col > .d-flex {
+    flex-direction: column;
+}
+.copy {
+  padding-top:2rem;
+  padding-bottom: 4rem;
+  justify-content: center;
 }
 
-img.hero {
-    width: 200px;
-    height: 200px;
-    border: solid 0.25rem;
-    border-radius: 50%;
-    border-color: darkgray;
-    object-fit: cover;
-  }
+.links {
+    flex-direction: row;
+}
+.links > a, .links > a:hover {
+    border: unset;
+    text-decoration: unset;
+    background: unset;
+    
+}
 
-  .copy {
-      padding-top: 4rem;
-  }
-  .copy > *{
-    font-size: smaller;
-    margin: auto
-  }
+.links > a:hover .fa-circle {
+    color: var(--accent-color);
+}
+.links > a:hover .rounded {
+    color: white;
+}
 
+.footer-row p {
+    font-size: 1.2rem;
+    line-height: 1.6em;
+}
+.footer-row h2 {
+    font-size: 3rem;
+    letter-spacing: -0.125rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 3rem;
+}
+
+.fa-circle {
+    font-size: 1.5rem !important;
+    color: var(--em-text-color);
+}
+
+.fa-inverse {
+    font-size: 1.5rem;
+}
+.footer-row .navbar {
+    padding:0;
+    margin:0;
+}
+.footer-row .navbar .navbar-nav {
+    display: flex;
+}
+
+.footer-row .navbar * {
+    color: var(--text-color);
+}
+/* 
   @media all and (max-width: 375px) {
     section.mk-footer
     {
@@ -48,4 +84,14 @@ img.hero {
         padding: 10px;
     }
    
+} */
+
+.copy p:not(:last-child)::after {
+  content: "•";
+  display: inline-block;
+  padding: 0 5px;
+  color: var(--secondary-text-color);
+  letter-spacing: 0.4em;
+  text-indent: 0.2em;
+  line-height: 1.4;
 }
