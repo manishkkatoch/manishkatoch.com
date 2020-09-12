@@ -1,188 +1,209 @@
-
 section.post {
-    margin:auto;
-    max-width:60rem;
-    padding-top:4rem;
-    font-family: "Open Sans";
-    font-size: 1em;
-    padding-bottom: 4rem;
+  margin: auto;
+  max-width: 60rem;
+  padding-top: 4rem;
+  font-family: "Open Sans";
+  font-size: 1em;
+  padding-bottom: 4rem;
+}
+
+section.post * {
+  line-height: 2rem;
+}
+
+section.post code,
+section.post pre {
+  margin: 2rem 0;
 }
 
 section.post div.credit {
-    display: block;
-    margin:0;
-    padding:0;
-    text-align: center;
-    font-size: smaller;
+  display: block;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: smaller;
 }
 
 section.post h1 {
-    padding-bottom: 3px;
-    padding-top: 25px;
+  padding-bottom: 2rem; 
+  padding-top: 3rem;
 }
 
 section.post p {
-    font-size: 1.2em;
-    text-align: justify;
-    line-height: 1.8em;
+  font-size: 1.2em;
+  text-align: justify;
+  line-height: 1.8em;
 }
 
-section.post h3, section.post h2, section.post h4, section.post h5 {
-    font-weight: 700;
-    padding-top: 1em;
-    line-height: 2.2em;
+section.post h3,
+section.post h2,
+section.post h4,
+section.post h5 {
+  font-weight: 700;
+  padding-top: 1em;
+  line-height: 2.2em;
 }
-section.post ul, section.post ol, section.post ol li, section.post ul li {
-    font-size: 1.08em;
-    line-height: 2em;
+section.post h4 {
+    font-size: 1.4rem;
+}
+section.post h5 {
+    font-size: 1.2rem;
+}
+
+section.post ul,
+section.post ol,
+section.post ol li,
+section.post ul li {
+  font-size: 1.08em;
+  line-height: 2em;
 }
 
 section.post blockquote {
-    border-left: solid 10px linear-gradient(90deg,#ff7300,#ff2776);
-    padding: 1em;
-    background-color: var( --tint-background-color);
-    font-size: smaller;
+  margin: 1rem 0;
+  border-left: solid 10px var(--orange-color);
+  padding: 1em;
+  background-color: var(--light-bg-color);
+  font-size: 1rem;
+}
+
+section.post blockquote * {
+  background-color: transparent;
 }
 
 section.post blockquote.heavy-quote {
-    border: none;
-    background: none;
-    color: var(--light-gray);
-    text-align: center;
-    padding: 2em;
-    margin: auto;
-    font-size: x-large;
+  border: none;
+  background: none;
+  color: var(--light-gray);
+  text-align: center;
+  padding: 2em;
+  margin: auto;
+  font-size: x-large;
 }
 
 section.post hr {
-    width: 100px;
-    margin: auto;
-    margin: 40px auto;
-    border: none;
-    /* border-top: dotted 0.5em var(--light-gray); */
-    color: transparent;
-    font-size: 28px;
+  width: 100px;
+  margin: auto;
+  margin: 40px auto;
+  border: none;
+  /* border-top: dotted 0.5em var(--light-gray); */
+  color: transparent;
+  font-size: 28px;
 }
 
 section.post hr::before {
-    content: "...";
-    display: block;
-    color: black;
-    letter-spacing: 0.6em;
-    text-indent: 0.6em;
-    line-height: 1.4;
+  content: "...";
+  display: block;
+  color: black;
+  letter-spacing: 0.6em;
+  text-indent: 0.6em;
+  line-height: 1.4;
 }
 
 section.post ul.post-nav {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 section.post ul.post-nav li {
-    list-style: none;
-    margin:0;
-    padding:0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 section.post ul.post-nav li.previous {
-    float: left;
+  float: left;
 }
 
 section.post ul.post-nav li.next {
-    float: right;
+  float: right;
 }
 
 section.post img {
-    width: 100%;
-    object-fit: cover;
-    object-position: top;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 
 section.post img.banner {
-    width: 100%;
-    height: 50vh;
-    object-fit: cover;
-    object-position: top;
+  width: 100%;
+  height: 50vh;
+  object-fit: cover;
+  object-position: top;
 }
 
-
-
 section.post .post-tag {
-    display: inline-block;
+  display: inline-block;
 }
 
 section.post p img {
-    margin: auto;
-    margin-top:1em;
-    margin-bottom:1em;
+  margin: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .fa-circle {
-    font-size: xx-small;
-    
-    color: var(--light-gray);
+  font-size: xx-small;
+
+  color: var(--light-gray);
 }
 
 .meta {
-    margin: 20px 0px 30px;
-    color: var(--light-gray);
+  margin: 20px 0px 30px;
+  color: var(--light-gray);
 }
 .meta .date {
-    margin:0;
-    padding:0;
-    font-size: smaller;
+  margin: 0;
+  padding: 0;
+  font-size: smaller;
 }
 
 .tinted {
-    color:var(--tint-color);
+  color: var(--tint-color);
 }
 
 .publications {
-    background-color: var( --tint-background-color);
-    padding: 1em;
-    margin-top: 2em;
-    margin-bottom: 2em;
+  background-color: var(--light-bg-color);
+  padding: 1em;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
-.publications p {
-    margin:0;
-    padding:0;
-    font-size: smaller !important;
+.publications * {
+  margin: 0;
+  padding: 0;
+  background: transparent;
 }
-
 
 @media all and (max-width: 375px) {
-    section.post
-    {
-        font-size: 10px;
-        padding: 0px;
-    }
-    section.post h1 {
-        font-size: 2rem;
-        padding-bottom: 5px;
-        padding-top: 20px;
-    }
-    section.post img.banner {
-        height: 30vh;
-    }
-    .col-lg-12 {
-        padding: 10px;
-    }
+  section.post {
+    font-size: 10px;
+    padding: 0px;
+  }
+  section.post h1 {
+    font-size: 2rem;
+    padding-bottom: 5px;
+    padding-top: 20px;
+  }
+  section.post img.banner {
+    height: 30vh;
+  }
+  .col-lg-12 {
+    padding: 10px;
+  }
 }
 
 @media all and (min-width: 376px) and (max-width: 800px) {
-    section.post
-    {
-        font-size: 14px;
-        padding: 0px;
-    }
-    section.post h1 {
-        font-size: 2.2rem;
-        padding-bottom: 5px;
-        padding-top: 20px;
-    }
-    section.post img.banner {
-        height: 30vh;
-    }
+  section.post {
+    font-size: 14px;
+    padding: 0px;
+  }
+  section.post h1 {
+    font-size: 2.2rem;
+    padding-bottom: 5px;
+    padding-top: 20px;
+  }
+  section.post img.banner {
+    height: 30vh;
+  }
 }

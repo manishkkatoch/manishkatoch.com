@@ -328,5 +328,7 @@ here is the code in action
 
 <div style='position:relative; padding-bottom:calc(70% + 20px)'><iframe src='https://gfycat.com/ifr/MealyThirdItaliangreyhound' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;background: white;' allowfullscreen></iframe></div><p> <a href="https://gfycat.com/mealythirditaliangreyhound">via Gfycat</a></p>
 
+---
+
 That’s it!
 The entire project is available at: https://github.com/manishkkatoch/SimpleTwoWayBindingIOS
