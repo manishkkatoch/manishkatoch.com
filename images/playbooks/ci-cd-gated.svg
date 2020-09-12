@@ -4,7 +4,7 @@
     <style>
       @font-face {
         font-family: 'Neucha', cursive;
-        src: url("css/Neucha-Regular.ttf");
+        src: url("../css/Neucha-Regular.ttf");
       }
       @font-face {
         font-family: "Cascadia";

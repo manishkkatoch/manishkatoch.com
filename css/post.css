@@ -43,6 +43,9 @@ section.post h5 {
   padding-top: 1em;
   line-height: 2.2em;
 }
+section.post h3 {
+    font-size: 1.6rem;
+}
 section.post h4 {
     font-size: 1.4rem;
 }
@@ -68,6 +71,8 @@ section.post blockquote {
 
 section.post blockquote * {
   background-color: transparent;
+  text-align: left;
+  font-size: 0.9rem;
 }
 
 section.post blockquote.heavy-quote {
