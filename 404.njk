@@ -1,0 +1,23 @@
+---
+layout: layouts/base.njk
+title: Oops! Not Found
+permalink: 404.html
+---
+
+<div class="row" style="min-height:69vh">
+    <div class="col-md-6">
+        <picture>
+    <source media="(min-width:800px)" srcset=""{{ '/images/404.gif' | url }}"">
+    <source srcset="{{ '/images/404.png' | url }}" media="(max-width:769px)">
+  <source srcset="{{ '/images/404.png' | url }}" media="(max-width:375px)">
+     <img src="{{ '/images/404.gif' | url }}" alt="Lost" style="width:100%;object-fit:cover;">
+  </picture>
+    </div>
+    <div class="col-md-6" style="padding-top: 5%;">
+    <h1 style="text-transform: uppercase;font-weight: bold;line-height: 3rem;text-align: left;">Vincent might be confused, But you need not be!<h1>
+    <br/>
+    <h2 style="font-size: 2rem;text-transform: uppercase;line-height: 2.3rem;">You just got mis-directed.<br/>Let's take you <a href="/">Home</a> instead?</h2>
+    </div>
+</div>
+
+
