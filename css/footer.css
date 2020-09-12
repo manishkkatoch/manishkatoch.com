@@ -68,8 +68,6 @@
 }
 .footer-row .navbar .navbar-nav {
     display: flex;
-    flex-direction: row;
-    margin: auto;
 }
 
 .footer-row .navbar * {
@@ -81,6 +79,12 @@
     {
         padding: 0px 16px;
     }
+    .footer-row .navbar .navbar-nav {
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+    }
+    
     
 }
 
