@@ -101,9 +101,9 @@ module.exports = function(eleventyConfig) {
     sources += `<source srcset=${sets[sets.length - 1].url} media="(min-width: ${sortedWidths[sortedWidths.length - 1]}px)">\n`;  
     let code = `
     <a href="${url}" class="img-ref" target="${target}" rel="noopener" >
-    <picture>
+    <picture class="${classes}">
       ${sources}
-      <img alt="${alt}" src="${stats["jpeg"][0].url}" class="${classes}" />
+      <img alt="${alt}" src="${stats["jpeg"][0].url}"  />
     </picture>
     </a>
     `;

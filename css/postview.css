@@ -51,6 +51,10 @@ a.post-ref > h2 {
   margin-bottom: 10px;
   position: relative;
 }
+.post-hero > img {
+  width: 100%;
+  height: 30vh;
+}
 
 .tag-list {
   float: right;
@@ -73,6 +77,11 @@ a.post-ref > h2 {
   float: left;
   margin-right: 10px;
 }
+.col-lg-12 > .post-div > a > .post-hero > img {
+  width: 100px;
+  height: 100px;
+}
+
 
 div.tag-view {
   margin-top: 1rem;
@@ -93,4 +102,9 @@ div.tag-view {
   height: 100px;
   float: left;
   margin-right: 10px;
+}
+
+.tag-post > .post-div > a > .post-hero > img {
+  width: 100px;
+  height: 100px;
 }
