@@ -86,19 +86,25 @@ module.exports = function(eleventyConfig) {
       // You bet we throw an error on missing alt (alt="" works okay)
       throw new Error(`Missing \`alt\` on rImage from: ${src}`);
     }
-    
+    let sortedWidths = width;
     let stats = await Image(src, {
-      widths: width,
+      widths: sortedWidths,
       formats: ["jpeg"],
       urlPath: "/images/",
       outputDir: "_site/images/",
     });
 
-    let sets = stats["jpeg"].map(i => i.srcset).join(",");
-    sizes = width.map(w => "(max-width: " + (w + 10) + "px) " + w + "w").join(",");
+    let sets = stats["jpeg"];
+    let sources = sortedWidths.map(w => "(max-width: " + w + "px)").map((s, i) => {
+      return `<source srcset="${sets[i].url}" media="${s}">`
+    }).join("\n");
+    sources += `<source srcset=${sets[sets.length - 1].url} media="(min-width: ${sortedWidths[sortedWidths.length - 1]}px)">\n`;  
     let code = `
     <a href="${url}" class="img-ref" target="${target}" rel="noopener" >
-      <img alt="${alt}" src="${stats["jpeg"][0].url}" class="${classes}" srcset="${sets}"/>
+    <picture>
+      ${sources}
+      <img alt="${alt}" src="${stats["jpeg"][0].url}" class="${classes}" />
+    </picture>
     </a>
     `;
     return code;

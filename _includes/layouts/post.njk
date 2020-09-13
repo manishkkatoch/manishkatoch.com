@@ -5,7 +5,7 @@ ogtype: article
 
 <section class="container-fluid align-items-center post" >
  {% if (noBanner or true) and noBanner != true %}
-  <img src="{{ image | url }}" class="banner"/>
+  {% rI image, title, [750,900,1200], "banner", "#" %}
   {%- if imageCredit -%}
   <div class="credit">
     <a target="_blank" rel="noopener" href="{{ imageCredit | linkUrl }}">{{ imageCredit | linkName }}</a> on 
@@ -35,7 +35,7 @@ ogtype: article
     <p>This story was also published in:</p>
       <ul>
         {% for publication in publications %}
-        <li class="p-0"><a target="_blank" href="{{ publication | linkUrl }}" >{{ publication | linkName }}</a></li>
+        <li class="p-0"><a target="_blank" rel="noopener" href="{{ publication | linkUrl }}" >{{ publication | linkName }}</a></li>
         {% endfor %}
       </ul>
   </div>
