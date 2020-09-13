@@ -73,6 +73,10 @@ module.exports = function(eleventyConfig) {
     return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toLocal().toFormat('LLL dd, yyyy');
   });
 
+  eleventyConfig.addFilter('googleDate', (dateObj) => {
+    return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toLocal().toFormat('yyyy-MM-dd');
+  });
+
   eleventyConfig.addFilter('linkName', (linkString) => {
     return linkString.split("|").map(x => x.trim()).shift();
   });
